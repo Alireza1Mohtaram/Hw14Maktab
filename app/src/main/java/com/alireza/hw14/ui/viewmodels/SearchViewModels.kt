@@ -1,25 +1,20 @@
 package com.alireza.hw14.ui.viewmodels
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.alireza.hw14.data.model.PhotoX
-import com.alireza.hw14.data.repository.SerachRepository
+import com.alireza.hw14.data.repository.SearchRepository
 
-class SearchViewModels : ViewModel() {
+class SearchViewModels (private val searchRepository : SearchRepository  ): ViewModel() {
 
-    val listOfSearch:LiveData<List<PhotoX>>
     val showProgres : LiveData<Boolean>
-    private val searchRepository = SerachRepository()
 
     init {
         this.showProgres = searchRepository.showProgress
-        this.listOfSearch = searchRepository.listOfSearching
     }
-
-    fun getSearchResultFromServer(searchText:String){
-        searchRepository.getDataFromServer(searchText)
+    fun getListOfPhotoSearch(text:String): LiveData<List<PhotoX>> {
+        return searchRepository.getPhotoList(text)
     }
-
-
-
 }

@@ -8,12 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.alireza.hw14.R
 import com.alireza.hw14.data.model.PhotoX
+import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 
-class PhotoRecyclerAdapter(listOfPhoto: List<PhotoX>) :
+class PhotoRecyclerAdapter() :
     RecyclerView.Adapter<PhotoRecyclerAdapter.PhotoVM>() {
 
-    var photos = listOfPhoto
+    private var photos = emptyList<PhotoX>()
+
 
     class PhotoVM(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var imgPoster: ImageView = itemView.findViewById(R.id.img_photo)
@@ -29,8 +31,9 @@ class PhotoRecyclerAdapter(listOfPhoto: List<PhotoX>) :
 
     override fun onBindViewHolder(holder: PhotoVM, position: Int) {
         val photo = photos[position]
-        loadImage(holder.imgPoster, photo)
+        loadImageWithLink(holder.imgPoster, photo)
         holder.textDesc.text = photo.title
+
     }
     override fun getItemCount(): Int {
         return photos.size
@@ -41,9 +44,21 @@ class PhotoRecyclerAdapter(listOfPhoto: List<PhotoX>) :
                 .into(imageView);
     }
     private fun loadImageWithLink(imageView: ImageView, photoX: PhotoX) {
-        Picasso.get()
+        Glide.with(imageView.context)
             .load(photoX.url_s)
-            .into(imageView);
+            .into(imageView)
+            
 
     }
+    fun setData(listOfPhoto : List<PhotoX>){
+        this.photos = listOfPhoto
+        this.notifyItemInserted(itemCount)
+    }
+
+    fun appendData(it: List<PhotoX>) {
+        (photos as MutableList).addAll(it)
+        this.notifyItemInserted(itemCount)
+    }
+
+
 }

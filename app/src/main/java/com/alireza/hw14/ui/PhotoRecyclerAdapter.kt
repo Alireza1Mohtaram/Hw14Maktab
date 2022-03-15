@@ -6,9 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.alireza.hw14.R
 import com.alireza.hw14.data.model.PhotoX
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.squareup.picasso.Picasso
 
 class PhotoRecyclerAdapter() :
@@ -44,8 +47,16 @@ class PhotoRecyclerAdapter() :
                 .into(imageView);
     }
     private fun loadImageWithLink(imageView: ImageView, photoX: PhotoX) {
+        val refresh : CircularProgressDrawable = CircularProgressDrawable(imageView.context).apply {
+            strokeWidth = 5f
+            centerRadius= 30f
+            start()
+        }
+
         Glide.with(imageView.context)
+            .setDefaultRequestOptions(RequestOptions.fitCenterTransform())
             .load(photoX.url_s)
+            .placeholder(refresh)
             .into(imageView)
             
 
@@ -58,6 +69,7 @@ class PhotoRecyclerAdapter() :
     fun appendData(it: List<PhotoX>) {
         (photos as MutableList).addAll(it)
         this.notifyItemInserted(itemCount)
+
     }
 
 

@@ -3,9 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:icon="@drawable/ic_home"
         android:id="@+id/miHome"
         android:title="Home" />
     <item
+        android:icon="@drawable/ic_search"
         android:id="@+id/miSearch"
         android:title="Search" />
 </menu>

@@ -14,6 +14,7 @@ import com.alireza.hw14.R
 import com.alireza.hw14.data.model.PhotoX
 import com.alireza.hw14.ui.viewmodels.HomeFragmentViewModel
 import com.alireza.hw14.ui.viewmodels.PhotoListViewModelFactory
+import com.facebook.shimmer.ShimmerFrameLayout
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -26,8 +27,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     lateinit var progress: ProgressBar
     val adapter = PhotoRecyclerAdapter()
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,7 +35,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         homeFragmentViewModel.showProgres.observe(viewLifecycleOwner, Observer {
             if (it == true) {
-                progress.visibility = View.VISIBLE
+                 progress.visibility = View.VISIBLE
             } else {
                 progress.visibility = View.GONE
             }
@@ -57,21 +56,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     }
     private fun init(it: List<PhotoX>) {
-        //val adapter = PhotoRecyclerAdapter()
         adapter.setData(it)
         photoList.adapter = adapter
         photoList.Recycler().setViewCacheSize(it.size - 1)
         photoList.layoutManager = LinearLayoutManager(requireContext())
-
     }
     private fun append(it: List<PhotoX>) {
         adapter.appendData(it)
-        photoList.adapter = adapter
-      //  adapter.notifyItemInserted(it.size)
+        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT
         photoList.Recycler().setViewCacheSize(it.size - 1)
-        //photoList.scrollToPosition(photoList.childCount)
-        photoList.layoutManager = LinearLayoutManager(requireContext())
-
     }
 
 

@@ -58,4 +58,5 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.github.leonardoxh:retrofit2-livedata-adapter:1.1.2'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 }
